@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv*/
+venv/
+
+# Модели и веса — скачиваются/экспортируются скриптами, в репозиторий не попадают
+models/
+*.bin
+*.onnx
+*.part
+*.model
+
+# Пользовательские данные
+config.json
+dictation.log
+last_text.txt
+dictation.pid
+samples/
+*.wav
+
+# Кэши и временные файлы
+.pipcache/
+.tmp/
+torchinductor_*/
+hf/
+
+# Сборка
+dist/
+dist-new/
+build/
+installer/
+install-test/
+*.log
+*.zip
+o.txt
+e.txt

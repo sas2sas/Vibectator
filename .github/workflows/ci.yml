@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Синтаксис Python
+        run: python -m py_compile dictate.py download_model.py download_ms.py bench.py test_asr.py test_gigaam.py test_hotkey_logic.py
+
+      - name: Валидность config.example.json
+        run: python -c "import json; json.load(open('config.example.json', encoding='utf-8')); print('config ok')"
+
+      - name: Обязательные файлы на месте
+        shell: pwsh
+        run: |
+          $required = @('dictate.py','README.md','LICENSE','setup.ps1','requirements.txt','run.cmd','stop.cmd')
+          $missing = $required | Where-Object { -not (Test-Path $_) }
+          if ($missing) { throw "Не найдены: $($missing -join ', ')" }
+          Write-Host "Все файлы на месте"
